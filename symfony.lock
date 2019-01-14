@@ -20,6 +20,9 @@
     "league/oauth2-client": {
         "version": "2.4.1"
     },
+    "league/oauth2-facebook": {
+        "version": "2.0.1"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },

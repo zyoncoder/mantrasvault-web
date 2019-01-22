@@ -95,6 +95,11 @@ class Category
         $this->right = $right;
         return $this;
     }
+    public function setRoot(int $root): self
+    {
+        $this->root = $root;
+        return $this;
+    }
     public function getRoot()
     {
         return $this->root;
@@ -124,5 +129,8 @@ class Category
     public function getSlug()
     {
         return $this->slug;
+    }
+    public function __toString() {
+        return $this->title;
     }
 }

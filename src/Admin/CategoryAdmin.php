@@ -26,7 +26,6 @@ final class CategoryAdmin extends AbstractAdmin
             'sortable' => true,
             'choices' =>  array_values($rootNodes),
             'choice_label' => function($category, $key, $value) {
-                /** @var Category $category */
                 return $category->getTitle();
             },
             'choice_attr' => function($category, $key, $value) {
@@ -45,6 +44,13 @@ final class CategoryAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('title');
+        $listMapper->addIdentifier('title')
+            ->add('slug')
+            ->add('_action', 'actions', [
+            'actions' => [
+                'edit' => [],
+                'delete' => []
+            ]
+        ]);
     }
 }

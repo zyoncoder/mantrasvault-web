@@ -7,7 +7,7 @@ parameters:
     locale: 'en'
 
 services:
-    # default configuration for services in *this* file
+    # default configuration for services in *this* file§
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
@@ -32,3 +32,11 @@ services:
             arguments: [~, App\Entity\Category, ~]
             tags:
                 - { name: sonata.admin, manager_type: orm, label: Category }
+
+    admin.content:
+                class: App\Admin\ContentAdmin
+                arguments: [~, App\Entity\Content, ~]
+                tags:
+                    - { name: sonata.admin, manager_type: orm, label: Content }
+
+

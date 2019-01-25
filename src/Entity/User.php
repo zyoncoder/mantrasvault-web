@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -47,6 +49,20 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $access_token;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Content", mappedBy="user", orphanRemoval=true)
+     */
+    private $contents;
+
+
+
+
+
+    public function __construct()
+    {
+        $this->contents = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -158,6 +174,37 @@ class User implements UserInterface
     public function setAccessToken(string $access_token): self
     {
         $this->access_token = $access_token;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Content[]
+     */
+    public function getContents(): Collection
+    {
+        return $this->contents;
+    }
+
+    public function addContent(Content $content): self
+    {
+        if (!$this->contents->contains($content)) {
+            $this->contents[] = $content;
+            $content->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContent(Content $content): self
+    {
+        if ($this->contents->contains($content)) {
+            $this->contents->removeElement($content);
+            // set the owning side to null (unless already changed)
+            if ($content->getUser() === $this) {
+                $content->setUser(null);
+            }
+        }
 
         return $this;
     }

@@ -17,11 +17,28 @@ class Content
      */
     private $id;
 
+
     /**
-     * @ORM\Column(name="user_id",type="integer")
+     * @ORM\Column(name="user_id", type="integer")
      */
     private $userId;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="contents")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @ORM\Column(name="category_id", type="integer")
+     */
+    private $categoryId;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="contents")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -44,7 +61,8 @@ class Content
     private $image;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @Gedmo\Slug(fields={"title"})
+     * @ORM\Column(name="slug", type="string", length=128)
      */
     private $slug;
 
@@ -61,24 +79,23 @@ class Content
     private $dateUpdated;
 
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Gedmo\Timestampable(on="change", field={"title", "body"})
-     */
-    private $contentChanged;
 
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", columnDefinition="ENUM('draft', 'published')")
      */
     private $status;
+
+
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUserId(): ?int
+
+  public function getUserId(): ?int
     {
         return $this->userId;
     }
@@ -89,6 +106,45 @@ class Content
 
         return $this;
     }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+        return $this;
+
+    }
+
+    public function getCategoryId(): ?int
+    {
+        return $this->categoryId;
+    }
+
+    public function setCategoryId(int $categoryId): self
+    {
+        $this->categoryId = $categoryId;
+
+        return $this;
+    }
+
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+        return $this;
+
+    }
+
+
 
     public function getTitle(): ?string
     {
@@ -186,17 +242,6 @@ class Content
         return $this;
     }
 
-    public function getContentChanged(): ?string
-    {
-        return $this->contentChanged;
-    }
-
-    public function setContentChanged(string $contentChanged): self
-    {
-        $this->contentChanged = $contentChanged;
-
-        return $this;
-    }
 
 
 }

@@ -63,6 +63,16 @@ class Category
      */
     private $contents;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $categoryFileId;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\CategoryFile", cascade={"persist", "remove"})
+     */
+    private $categoryFile;
+
 
 
     public function __construct()
@@ -179,6 +189,28 @@ class Category
         return $this;
     }
 
+    public function getCategoryFileId(): ?int
+    {
+        return $this->categoryFileId;
+    }
 
+    public function setCategoryFileId(?int $categoryFileId): self
+    {
+        $this->categoryFileId = $categoryFileId;
+
+        return $this;
+    }
+
+    public function getCategoryFile(): ?CategoryFile
+    {
+        return $this->categoryFile;
+    }
+
+    public function setCategoryFile(?CategoryFile $categoryFile): self
+    {
+        $this->categoryFile = $categoryFile;
+
+        return $this;
+    }
 
 }

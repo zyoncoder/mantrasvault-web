@@ -41,6 +41,18 @@ class Content
     private $category;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $contentFileId;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\ContentFile", cascade={"persist", "remove"})
+     */
+    private $contentFile;
+
+
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $title;
@@ -145,6 +157,30 @@ class Content
     }
 
 
+    public function getContentFileId(): ?int
+    {
+        return $this->contentFileId;
+    }
+
+    public function setContentFileId(?int $contentFileId): self
+    {
+        $this->contentFileId = $contentFileId;
+
+        return $this;
+    }
+
+    public function getContentFile(): ?ContentFile
+    {
+        return $this->contentFile;
+    }
+
+    public function setContentFile(?ContentFile $contentFile): self
+    {
+        $this->contentFile = $contentFile;
+
+        return $this;
+    }
+
 
     public function getTitle(): ?string
     {
@@ -241,6 +277,7 @@ class Content
 
         return $this;
     }
+
 
 
 

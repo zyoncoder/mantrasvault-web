@@ -3,10 +3,11 @@ namespace App\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
- * @Gedmo\Uploadable(path="/uploads", allowOverwrite=true, appendNumber=true, allowedTypes="image/jpeg,image/pjpeg,image/png,image/x-png", maxSize=10000000)
+ * @Gedmo\Uploadable(callback="myCallbackMethod", allowOverwrite=true, filenameGenerator="ALPHANUMERIC", appendNumber=true, allowedTypes="image/jpeg,image/pjpeg,image/png,image/x-png")
  */
 class CategoryFile
 {
@@ -53,7 +54,10 @@ class CategoryFile
      */
     private $dateUpdated;
 
-
+    /**
+     * @Assert\File()
+     */
+    public $file;
 
     public function getDateCreated(): ?\DateTimeInterface
     {
@@ -77,6 +81,22 @@ class CategoryFile
         $this->dateUpdated = $dateUpdated;
 
         return $this;
+    }
+
+
+    public function setFile($file): self
+    {
+        $this->file = $file;
+
+        return $this;
+    }
+
+    public function myCallbackMethod(array $info)
+    {
+    }
+
+    public function __toString() {
+        return (string) $this->name;
     }
 
 }

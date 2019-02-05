@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use App\Entity\Category;
+use Sonata\AdminBundle\Form\Type\ModelType;
 
 final class CategoryAdmin extends AbstractAdmin
 {
@@ -35,6 +36,11 @@ final class CategoryAdmin extends AbstractAdmin
             'required' => false
 
         ]);
+
+        $formMapper->add('categoryFile', ModelType::class, [
+            'required' => false
+        ]);
+
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)

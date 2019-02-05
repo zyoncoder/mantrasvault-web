@@ -39,4 +39,10 @@ services:
                 tags:
                     - { name: sonata.admin, manager_type: orm, label: Content }
 
+    admin.categoryFile:
+                    class: App\Admin\CategoryFileAdmin
+                    arguments: [~, App\Entity\CategoryFile, ~]
+                    tags:
+                        - { name: sonata.admin, manager_type: orm, label: CategoryFile }
+
 
